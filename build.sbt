@@ -1,5 +1,3 @@
-enablePlugins(ScalaJSPlugin)
-
 enablePlugins(ScalaJSBundlerPlugin)
 
 name := "Reproduce"
