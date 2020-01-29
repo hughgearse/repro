@@ -13,10 +13,10 @@ class LookupPresenter(val model: ModelProperty[LookupModel])
 
 	def handleState(state: RoutingState) = state match {
 		case LookupState(id) =>
-			println("Setting id: " + id)
+			println("Setting the id: " + id)
 			model.subProp(_.id).set(Some(id))
 		case _ =>
-			println("Clearing id")
+			println("Clearing the id")
 			model.subProp(_.id).set(None)
 	}
 }
