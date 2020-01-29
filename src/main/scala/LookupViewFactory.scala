@@ -1,5 +1,7 @@
 import io.udash._
 import io.udash.properties.model.ModelProperty
+import org.scalajs.dom.Event
+import org.scalajs.dom.raw.HTMLInputElement
 import scalatags.JsDom.all._
 
 case class LookupModel(id: Option[String] = None) {
@@ -25,7 +27,12 @@ class LookupView(model: ModelProperty[LookupModel], presenter: LookupPresenter) 
 
 	val idProp = model.subProp(_.id).transform(_.getOrElse("No current id"))
 
-	def getTemplate: Modifier = div("Id: ", bind(idProp))
+	def getTemplate: Modifier = div(
+		span("Current: ", bind(idProp)),
+		input(onchange := {(event: Event) =>
+			model.subProp(_.id).set(Some(event.target.asInstanceOf[HTMLInputElement].value))
+		})
+	)
 }
 
 case object LookupViewFactory extends ViewFactory[LookupState] {
