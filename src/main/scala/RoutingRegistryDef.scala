@@ -1,18 +1,17 @@
 import io.udash._
 
-class RoutingRegistryDef extends RoutingRegistry[ContainerRoutingState] {
+class RoutingRegistryDef extends RoutingRegistry[ReproRoutingState] {
 
-	def matchUrl(url: Url) = url.value.stripSuffix("/") match {
-		case "lookup" / id => LookupState(id, Option(AppContext.applicationInstance.currentState))
+	private var currentState: ReproRoutingState = LoginRoutingState
+
+	def matchUrl(url: Url): ReproRoutingState = currentState
+
+	def matchState(state: ReproRoutingState): Url = {
+		currentState = state
+		Url(state match {
+			case LoginRoutingState => "login"
+			case ConnectedRoutingState(_) => "connected"
+		})
 	}
 
-	def matchState(state: ContainerRoutingState): Url = Url(state match {
-		case LookupState(id, _) => "lookup" / id
-		case _ => ""
-	})
-
-//	private val (url2State, state2Url) = bidirectional {
-//		case "lookup" / id  => LookupState(id, None)
-//		case "" => RootState
-//	}
 }
