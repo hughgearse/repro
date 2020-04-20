@@ -17,5 +17,5 @@ class ConnectedPresenter extends Presenter[ConnectedRoutingState] {
 
 class ConnectedView(username: Property[String], presenter: ConnectedPresenter) extends ContainerView {
 
-	def getTemplate: Modifier = div("Connected as: " + bind(username))
+	def getTemplate: Modifier = div("Connected as: " + username.get)
 }
